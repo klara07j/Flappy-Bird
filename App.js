@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import Bird from './src/components/Bird';
 import { useEffect, useState } from 'react';
 import Obstacles from './src/components/Obstacle';
@@ -64,28 +64,40 @@ export default function App() {
     };
   }, [birdBottom]);
 
+  const jump = () => {
+    setBirdBottom(birdBottom + 50);
+  };
+
   return (
-    <View style={styles.container}>
-      <Bird birdBottom={birdBottom} birdLeft={birdLeft} color="blue" />
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={jump}>
+          <View style={styles.touchArea} />
+        </TouchableWithoutFeedback>
 
-      <Obstacles 
-        color= {'green'}
-        obstacleWidht = {obstacleWidht}
-        obstacleHeight = {obstacleHeight}
-        randomBottom = {obstacleNegHeight}
-        gap = {gap}
-        obstaclesLeft = {obstaclesLeft}
-      />
+        <Bird 
+          birdBottom={birdBottom} 
+          birdLeft={birdLeft} 
+          color="blue" 
+        />
 
-      <Obstacles 
-        color= {'yellow'}
-        obstacleWidht = {obstacleWidht}
-        obstacleHeight = {obstacleHeight}
-        randomBottom = {obstacleNegHeightTwo}
-        gap = {gap}
-        obstaclesLeft = {obstaclesLeftTwo}
-      />
-    </View>
+        <Obstacles 
+          color= {'green'}
+          obstacleWidht = {obstacleWidht}
+          obstacleHeight = {obstacleHeight}
+          randomBottom = {obstacleNegHeight}
+          gap = {gap}
+          obstaclesLeft = {obstaclesLeft}
+        />
+
+        <Obstacles 
+          color= {'yellow'}
+          obstacleWidht = {obstacleWidht}
+          obstacleHeight = {obstacleHeight}
+          randomBottom = {obstacleNegHeightTwo}
+          gap = {gap}
+          obstaclesLeft = {obstaclesLeftTwo}
+        />
+      </View>
   );
 }
 
@@ -95,5 +107,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  touchArea: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 0,
   },
 });
